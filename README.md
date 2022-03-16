@@ -89,7 +89,6 @@ Para ver el servidor de producción, ejecuta los siguientes comandos:
 $ npm run build
 
 # Inicia el servidor de desarrollo
-
 $ npm run preview
 ```
 
