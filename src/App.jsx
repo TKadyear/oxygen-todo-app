@@ -18,7 +18,7 @@ function NavBar() {
 function NewTask() {
   return (
     <>
-      <main className='bg-gray-300'>
+      <main>
         <div className="container bg-indigo-600 shadow-md  px-8 pt-6 pb-8 mb-4 text-white">
           <h1>Create</h1>
           <hr />
@@ -44,15 +44,32 @@ function NewTask() {
   );
 }
 
+function CardTask() {
+  return (
+    <div className='bg-white  rounded-2xl w-11/12'>
+      <div className="p-4">
+        <p>Title</p>
+        <hr />
+        <div className="tags"></div>
+        <p>Description</p>
+        <p>Date</p>
+      </div>
+      <button className='bg-green-100 w-full rounded-b-2xl'>Done</button>
+    </div>
+  )
+}
 function ViewTasks() {
   return (
     <>
-      <main>
-        <h2>Who are we?</h2>
-        <p>
-          That feels like an existential question, don't you
-          think?
-        </p>
+      <main className='flex flex-col justify-center gap-3'>
+        <div>
+          <p>TO DO</p>
+          <CardTask></CardTask>
+        </div>
+        <div >
+          <p>DONE</p>
+          <CardTask></CardTask>
+        </div>
       </main>
 
     </>
@@ -62,7 +79,7 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar></NavBar>
-      <div className="App h-screen">
+      <div className="App h-screen bg-gray-300">
         <Routes>
           <Route path="/" element={<NewTask />} />
           <Route path="view-tasks" element={<ViewTasks />} />
