@@ -2,11 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 @layer base{
+  body{
+    @apply bg-gray-300;
+  }
+  h1{
+    @apply mx-8 my-2 font-bold;
+  }
   p{
     @apply m-2;
   }
   main{
-    @apply w-full lg:w-3/4 mx-auto py-10 flex flex-col justify-center gap-8 md:flex-row lg:justify-around md:items-start;
+    @apply w-full lg:w-3/4 mx-auto py-10 flex flex-col justify-center gap-8 md:flex-row lg:justify-around md:items-start ;
+  }
+  label{
+    @apply text-sm my-2;
+  }
+  input,textarea{
+   @apply inline shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
   }
   footer{
     @apply flex flex-row justify-center py-4 bg-gray-400 text-white;
