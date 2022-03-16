@@ -1,94 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
 import './App.css'
-const listTask = [
-  {
-    title: "Título de la tarea",
-    tags: [
-      {
-        "tag": "Nombre de la etiqueta",
-        "color": "Color",
-        "prioridad": "tipo de prioridad?"
-      }
-    ],
-    description: "Descripción de la tarea",
-    done: false
-  },
-  {
-    title: "Creación del header",
-    tags: [
-      {
-        "tag": "Urgente",
-        "prioridad": "Red"
-      },
-      {
-        "tag": "dev",
-        "prioridad": "Red"
-      }
-    ],
-    description: "Creación de una barra de navegación y gestión de los diferentes enlaces dentro de la página",
-    "creationDate": "2022/03/15",
-    done: false
-  },
-  {
-    title: "Call-To-Action para Home",
-    tags: [
-      {
-        "tag": "medio",
-        "prioridad": "yellow"
-      },
-      {
-        "tag": "dev",
-        "prioridad": "blue"
-      }
-    ],
-    description: "Aplicación del diseño principal sobre el botón situado en el Hero",
-    "creationDate": "2022/03/15",
-    done: false
-  },
-  {
-    title: "Creación de las tablas en la BD",
-    tags: [
-      {
-        "tag": "Urgente",
-        "prioridad": "Red"
-      }
-    ],
-    description: "A partir de los requerimientos técnicos,generar las tablas de la Base de datos",
-    "creationDate": "2022/03/15",
-    done: false
-  },
-  {
-    title: "Componente Card",
-    tags: [
-      {
-        "tag": "bajo",
-        "prioridad": "green"
-      }
-    ],
-    description: "Maquetación y lógica del componente para el listado de las cards",
-    "creationDate": "2022/03/15",
-    "done": true
-  },
-  {
-    title: "Imágenes de Perfil",
-    tags: [
-      {
-        "tag": "medio",
-        "prioridad": "yellow"
-      },
-      {
-        "tag": "ui",
-        "prioridad": "Red"
-      }
-    ],
-    description: "Creación de las imágenes genéricas para la página de perfil",
-    "creationDate": "2022/03/15",
-    "done": true
-  }
-]
-
-
 
 function NavBar() {
   return (
@@ -108,7 +21,7 @@ function NavBar() {
 function NewTask() {
   return (
     <>
-      <main className='w-3/4 mx-auto'>
+      <main>
         <div className="container bg-indigo-600 shadow-md  px-8 pt-6 pb-8 mb-4 text-white">
           <h1>Create</h1>
           <hr />
@@ -136,45 +49,78 @@ function NewTask() {
 function CardTask(props) {
   return (
     <div className='bg-white  rounded-2xl w-11/12'>
-      <div className="p-4">
-        <p>{props.task.title}</p>
+      <div className="px-4">
+        <p className='font-bold'>{props.task.title}</p>
         <hr />
         <div className="tags"></div>
         <p>{props.task.description}</p>
         <p>{props.task.creationDate}</p>
       </div>
-      <button onClick={() => {
-        props.task.done = !props.task.done
-        console.log(props.task.title, !props.task.done)
-      }} className='bg-green-100 w-full rounded-b-2xl'>{props.task.done ? 'DONE' : 'TO-DO'}</button>
+      <button onClick={() => props.onClick(props.task.id)} className={`w-full rounded-b-2xl py-1 text-white ${props.task.done ? "bg-orange-500" : "bg-green-500"}`}>{props.task.done ? 'DONE' : 'TO-DO'}</button>
     </div>
   )
 }
+
 function TasksList(props) {
-  const tasks = [...listTask]
-  const renderedTasks = tasks.map(task => {
+  const renderedTasks = props.listTask.map(task => {
     if (task.done === props.done) {
-      return <CardTask key={task.title} task={task}></CardTask>
+      return <CardTask key={task.id} task={task} onClick={(i) => props.onClick(i)}></CardTask>
     }
   })
   return (
     <div className='bg-blue-500 py-4 flex flex-col items-center gap-3 w-full md:w-5/12'>
-      <p className='text-white font-bold'>TO DO</p>
+      <p className='text-white font-bold'>{props.done ? "DONE" : "TO-DO"}</p>
       <hr className='w-full' />
       {renderedTasks}
     </div>
   )
 }
-function ViewTasks() {
-  return (
-    <>
-      <main className='w-3/4 mx-auto  flex flex-col justify-center gap-3 md:flex-row md:justify-around md:items-start py-10'>
-        <TasksList done={false}></TasksList>
-        <TasksList done={true}></TasksList>
-      </main>
-
-    </>
-  );
+class ViewAllTasks extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listTask: [],
+    };
+  }
+  componentDidMount() {
+    const URL = '/data/todo-data.json'
+    fetch(URL)
+      .then(response => response.json())
+      .then(
+        (result) => {
+          result.forEach(task => task.id = task.title.replaceAll(' ', '-'))
+          this.setState({
+            listTask: this.state.listTask.concat(result),
+          })
+        }
+        ,
+        (error) => {
+          console.error({ isLoaded: true, payload: error })
+        }
+      )
+  }
+  handleClick(id) {
+    const updatedTask = [...this.state.listTask].map(task => {
+      if (task.id === id) {
+        task.done = !task.done
+      }
+      return task;
+    })
+    this.setState({
+      listTask: updatedTask,
+    })
+    console.log(id)
+  }
+  render() {
+    return (
+      <>
+        <main>
+          <TasksList done={false} listTask={this.state.listTask} onClick={(i) => this.handleClick(i)}></TasksList>
+          <TasksList done={true} listTask={this.state.listTask} onClick={(i) => this.handleClick(i)}></TasksList>
+        </main>
+      </>
+    )
+  }
 }
 function App() {
   return (
@@ -183,10 +129,10 @@ function App() {
       <div className="bg-gray-300">
         <Routes>
           <Route path="/" element={<NewTask />} />
-          <Route path="view-tasks" element={<ViewTasks />} />
+          <Route path="view-tasks" element={<ViewAllTasks />} />
         </Routes>
       </div>
-      <footer className="flex flex-row justify-center py-4 bg-gray-400 text-white"> Todos los derechos reservados 2021</footer>
+      <footer> Todos los derechos reservados 2021</footer>
     </BrowserRouter>
   )
 }

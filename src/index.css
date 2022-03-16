@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base{
+  p{
+    @apply m-2;
+  }
+  main{
+    @apply w-full lg:w-3/4 mx-auto py-10 flex flex-col justify-center gap-8 md:flex-row lg:justify-around md:items-start;
+  }
+  footer{
+    @apply flex flex-row justify-center py-4 bg-gray-400 text-white;
+  }
+}
+@layer components {
+  .tags{
+    @apply text-white font-bold text-sm w-max px-1 rounded-full bg-red-700;
+  }
+}
