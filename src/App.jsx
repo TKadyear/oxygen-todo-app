@@ -8,17 +8,14 @@ function NavBar() {
         ToDoApp
       </div>
       <div className='flex flex-row justify-around gap-2'>
-        <Link to="/">Home</Link>
-        <Link to="/about">Tasks</Link>
+        <Link to="/">New task</Link>
+        <Link to="/view-tasks">View Tasks</Link>
       </div>
-      <hr className='w-full m-2 lg:hidden' />
-      <p >Aplicaciones para la gestión de proyectos</p>
     </nav>
   );
 }
 
-
-function Home() {
+function NewTask() {
   return (
     <>
       <main className='bg-gray-300'>
@@ -47,7 +44,7 @@ function Home() {
   );
 }
 
-function About() {
+function ViewTasks() {
   return (
     <>
       <main>
@@ -57,9 +54,7 @@ function About() {
           think?
         </p>
       </main>
-      <nav>
-        <Link to="/">Home</Link>
-      </nav>
+
     </>
   );
 }
@@ -69,8 +64,8 @@ function App() {
       <NavBar></NavBar>
       <div className="App h-screen">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="about" element={<About />} />
+          <Route path="/" element={<NewTask />} />
+          <Route path="view-tasks" element={<ViewTasks />} />
         </Routes>
       </div>
       <footer className="flex flex-row justify-center py-4 bg-gray-400 text-white"> Todos los derechos reservados 2021</footer>
