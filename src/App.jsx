@@ -45,14 +45,30 @@ function NewTask() {
     </>
   );
 }
+function TaskTags(props) {
+  const colors = {
+    red: "bg-red-500",
+    blue: "bg-blue-500",
+    orange: "bg-orange-500",
+    green: "bg-green-500",
+    yellow: "bg-yellow-500",
+    purple: "bg-purple-500",
+    pink: "bg-pink-500",
+    darkBlue: "bg-slate-800"
+  }
+  const renderedTags = props.tags.map(tag => <span key={tag.name} className={`tags ${colors[tag.color]}`} > {tag.name}</span >)
+  return renderedTags;
+}
 
 function CardTask(props) {
   return (
-    <div className='bg-white  rounded-2xl w-11/12'>
+    <div className='bg-white rounded-2xl w-11/12'>
       <div className="px-4">
         <p className='font-bold'>{props.task.title}</p>
         <hr />
-        <div className="tags"></div>
+        <div className="my-2 flex flex-row flex-wrap gap-1">
+          <TaskTags tags={props.task.tags}></TaskTags>
+        </div>
         <p>{props.task.description}</p>
         <p>{props.task.creationDate}</p>
       </div>
