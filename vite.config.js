@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-
+const path = require('path')
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -9,12 +9,18 @@ export default defineConfig({
     assetsDir: './',
     cssCodeSplit: false
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    }
+  },
   optimizeDeps: {
     include: [
       'react',
       'react-dom',
       'react-router-dom',
-      'react-router'
+      'react-router',
+      '@redux-devtools/extension'
     ]
   },
 })
