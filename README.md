@@ -5,6 +5,8 @@ Esta es mi solución a la prueba de Oxygen de hacer un Todo app.
 - [Todo App](#todo-app)
   - [Tabla de contenidos](#tabla-de-contenidos)
   - [Vista General](#vista-general)
+    - [Formulario para crear tareas](#formulario-para-crear-tareas)
+    - [Lista de tareas](#lista-de-tareas)
   - [Prueba Técnica](#prueba-técnica)
     - [Descripción](#descripción)
     - [Requerimientos técnicos](#requerimientos-técnicos)
@@ -17,7 +19,10 @@ Esta es mi solución a la prueba de Oxygen de hacer un Todo app.
     - [Clona este repositorio](#clona-este-repositorio)
   - [Author](#author)
 ## Vista General
-
+### Formulario para crear tareas
+![Formulario para crear tareas](./public/vista-new-task.png)
+### Lista de tareas
+![Lista de tareas](./public/vista-all-task.png)
 ## Prueba Técnica
 ### Descripción
 El objetivo de esta prueba es determinar el nivel del candidato para poder asignarle
